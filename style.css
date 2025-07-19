@@ -1,5 +1,14 @@
 /* Wedding Invitation Styles - Renan & Karina */
 
+/* Sage Font */
+@font-face {
+    font-family: 'Sage';
+    src: url('sage.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
     /* Color Palette - Soft Pink and Monstera Green */
     --soft-pink: #f8e8e8;
@@ -60,6 +69,10 @@ body {
 .groom, .bride {
     display: inline-block;
     animation: fadeInScale 1s ease-out;
+}
+
+.sage {
+    font-family: 'Sage', 'Dancing Script', cursive !important;
 }
 
 .ampersand {
