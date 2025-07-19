@@ -1,0 +1,295 @@
+/* Import Sage font */
+@font-face {
+    font-family: 'Sage';
+    src: url('sage.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.6;
+    background: linear-gradient(135deg, #f8f2f2 0%, #e8f5e8 100%);
+    color: #4a4a4a;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Color palette variables */
+:root {
+    --soft-pink: #f4d3d3;
+    --monstera-green: #7fb069;
+    --dark-green: #5a8a4a;
+    --cream: #faf7f2;
+    --gold: #d4af37;
+    --text-dark: #4a4a4a;
+    --text-light: #6b6b6b;
+}
+
+/* Container */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--cream);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Header */
+.invitation-header {
+    background: linear-gradient(135deg, var(--soft-pink) 0%, var(--monstera-green) 100%);
+    padding: 60px 40px;
+    text-align: center;
+    position: relative;
+}
+
+.decorative-element {
+    width: 80px;
+    height: 2px;
+    background: var(--gold);
+    margin: 0 auto 30px;
+    position: relative;
+}
+
+.decorative-element::before,
+.decorative-element::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    top: -3px;
+}
+
+.decorative-element::before {
+    left: -10px;
+}
+
+.decorative-element::after {
+    right: -10px;
+}
+
+/* Sage font class for couple names */
+.sage {
+    font-family: 'Sage', 'Georgia', serif;
+}
+
+.couple-names {
+    font-size: 3.5rem;
+    color: white;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.invitation-text {
+    font-size: 1.2rem;
+    color: white;
+    font-style: italic;
+    opacity: 0.9;
+}
+
+/* Main content */
+.invitation-content {
+    padding: 50px 40px;
+}
+
+.event-details {
+    display: grid;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.event-details h2 {
+    color: var(--dark-green);
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.event-date,
+.event-location,
+.event-time {
+    font-size: 1.5rem;
+    text-align: center;
+    color: var(--text-dark);
+    font-weight: 300;
+}
+
+.event-date {
+    font-size: 2rem;
+    color: var(--monstera-green);
+    font-weight: bold;
+}
+
+/* RSVP Section */
+.rsvp-section {
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(135deg, rgba(244, 211, 211, 0.3) 0%, rgba(127, 176, 105, 0.3) 100%);
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+.rsvp-text {
+    font-size: 1.3rem;
+    color: var(--dark-green);
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.rsvp-details {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* Footer */
+.invitation-footer {
+    background: var(--monstera-green);
+    padding: 40px;
+    text-align: center;
+    color: white;
+}
+
+.footer-text {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    opacity: 0.9;
+    font-style: italic;
+}
+
+.signature {
+    font-size: 2rem;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        border-radius: 15px;
+    }
+    
+    .invitation-header {
+        padding: 40px 30px;
+    }
+    
+    .couple-names {
+        font-size: 2.8rem;
+    }
+    
+    .invitation-content {
+        padding: 40px 30px;
+    }
+    
+    .event-date {
+        font-size: 1.7rem;
+    }
+    
+    .event-location,
+    .event-time {
+        font-size: 1.3rem;
+    }
+    
+    .invitation-footer {
+        padding: 30px;
+    }
+    
+    .signature {
+        font-size: 1.7rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .invitation-header {
+        padding: 30px 20px;
+    }
+    
+    .couple-names {
+        font-size: 2.3rem;
+    }
+    
+    .invitation-text {
+        font-size: 1.1rem;
+    }
+    
+    .invitation-content {
+        padding: 30px 20px;
+    }
+    
+    .event-details h2 {
+        font-size: 1.1rem;
+    }
+    
+    .event-date {
+        font-size: 1.5rem;
+    }
+    
+    .event-location,
+    .event-time {
+        font-size: 1.1rem;
+    }
+    
+    .rsvp-section {
+        padding: 25px;
+    }
+    
+    .rsvp-text {
+        font-size: 1.2rem;
+    }
+    
+    .invitation-footer {
+        padding: 25px 20px;
+    }
+    
+    .signature {
+        font-size: 1.5rem;
+    }
+}
+
+/* Animation for a subtle entrance effect */
+.container {
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Print styles */
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+    
+    .container {
+        box-shadow: none;
+        border-radius: 0;
+        max-width: none;
+    }
+}
