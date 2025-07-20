@@ -1,75 +1,107 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Renan & Karina - Convite de Casamento</title>
+    <title>Convite de Casamento - Karina & Renan</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        // Timer até a data do casamento
+        function iniciaTimer() {
+            const dataEvento = new Date('2025-10-11T00:00:00');
+            const timerEl = document.getElementById('timer');
+            function atualizaTimer() {
+                const agora = new Date();
+                const diff = dataEvento - agora;
+                if (diff <= 0) {
+                    timerEl.textContent = "O grande dia chegou!";
+                    return;
+                }
+                const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minutos = Math.floor((diff / (1000 * 60)) % 60);
+                const segundos = Math.floor((diff / 1000) % 60);
+                timerEl.textContent = `${dias} dias, ${horas}h, ${minutos}min, ${segundos}s`;
+            }
+            atualizaTimer();
+            setInterval(atualizaTimer, 1000);
+        }
+        window.onload = iniciaTimer;
+    </script>
 </head>
 <body>
-    <div class="invitation-container">
-        <header class="header">
-            <div class="leaf-decoration top-left"></div>
-            <div class="leaf-decoration top-right"></div>
-            <h1 class="couple-names">
-                <span class="groom">Renan</span>
-                <span class="ampersand">&</span>
-                <span class="bride">Karina</span>
-            </h1>
-            <p class="invitation-text">Convidam você para celebrar o nosso casamento</p>
-        </header>
-
-        <main class="main-content">
-            <div class="event-details">
-                <div class="detail-item">
-                    <div class="icon">📅</div>
-                    <div class="detail-content">
-                        <h3>Data</h3>
-                        <p>10 de Outubro de 2025</p>
-                        <p class="time">Cerimônia às 16h</p>
-                    </div>
-                </div>
-
-                <div class="detail-item">
-                    <div class="icon">📍</div>
-                    <div class="detail-content">
-                        <h3>Local</h3>
-                        <p>Espaço Celebração</p>
-                        <p class="location">São Paulo</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="message-section">
-                <div class="heart-decoration">💕</div>
-                <p class="special-message">"Sua presença é muito importante para nós!"</p>
-                <div class="heart-decoration">💕</div>
-            </div>
-
-            <div class="decorative-image-placeholder">
-                <!-- Placeholder for the reference image -->
-                <div class="floral-pattern">
-                    <div class="flower">🌸</div>
-                    <div class="leaf">🌿</div>
-                    <div class="flower">🌸</div>
-                    <div class="leaf">🌿</div>
-                    <div class="flower">🌸</div>
-                </div>
-            </div>
-        </main>
-
-        <footer class="footer">
-            <div class="leaf-decoration bottom-left"></div>
-            <div class="leaf-decoration bottom-right"></div>
-            <p class="footer-text">Com amor,</p>
-            <p class="signature">Renan & Karina</p>
-            <div class="date-reminder">
-                <p>📌 Salve a data: 10/10/2025</p>
-            </div>
-        </footer>
+    <div class="video-window">
+        <video autoplay loop muted playsinline class="video-bg" id="bg-video">
+            <source src="video/background-video.mp4" type="video/mp4">
+            Seu navegador não suporta vídeo.
+        </video>
+        <div class="video-content scrollable">
+            <section class="section fade-in">
+                <h1 class="sage title-names">
+                    <span class="nome">Karina</span>
+                    <span class="e-comercial">e</span>
+                    <span class="nome">Renan</span>
+                </h1>
+            </section>
+            <section class="section fade-in">
+                <p class="data-local">11 de Outubro de 2025<br>São José dos Pinhais, PR</p>
+                <p id="timer" class="timer"></p>
+            </section>
+            <section class="section fade-in">
+                <p class="mensagem">
+                    Com alegria convidamos você para celebrar conosco esse momento especial.<br>
+                    Prepare-se para um dia repleto de amor, emoção e boas lembranças.
+                </p>
+            </section>
+            <section class="section fade-in">
+                <p class="mensagem">
+                    Sua presença tornará tudo ainda mais inesquecível.<br><br>
+                    <strong>Contamos com você!</strong>
+                </p>
+            </section>
+        </div>
     </div>
+    <script>
+        // Efeito: vídeo sobe quando rola para baixo, desce quando rola para cima, e retorna ao centro ao parar
+        const video = document.getElementById('bg-video');
+        const scrollable = document.querySelector('.scrollable');
+        let lastScrollTop = 0;
+        let scrollTimeout;
+
+        scrollable.addEventListener('scroll', function() {
+            const maxOffset = 40;
+            const scrollTop = scrollable.scrollTop;
+            const scrollHeight = scrollable.scrollHeight;
+            const clientHeight = scrollable.clientHeight;
+
+            // Direção do scroll: positivo para baixo, negativo para cima
+            const direction = scrollTop > lastScrollTop ? 1 : -1;
+            lastScrollTop = scrollTop;
+
+            const percent = scrollTop / (scrollHeight - clientHeight);
+
+            // Se rolando para baixo, vídeo sobe; se rolando para cima, vídeo desce
+            video.style.transform = `translateY(${direction * percent * maxOffset}px)`;
+
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                video.style.transform = 'translateY(0)';
+            }, 100);
+        });
+
+        // Fade-in das sessões ao aparecer na tela
+        function onScrollFadeIn() {
+            const sections = document.querySelectorAll('.section');
+            const trigger = window.innerHeight * 0.80;
+            sections.forEach(sec => {
+                const rect = sec.getBoundingClientRect();
+                if (rect.top < trigger) {
+                    sec.classList.add('visible');
+                }
+            });
+        }
+        document.querySelector('.scrollable').addEventListener('scroll', onScrollFadeIn);
+        window.addEventListener('load', onScrollFadeIn);
+        window.addEventListener('resize', onScrollFadeIn);
+    </script>
 </body>
 </html>
