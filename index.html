@@ -7,7 +7,7 @@
     <script>
         // Timer até a data do casamento
         function iniciaTimer() {
-            const dataEvento = new Date('2025-10-11T00:00:00');
+            const dataEvento = new Date('2025-10-11T10:25:00');
             const timerEl = document.getElementById('timer');
             function atualizaTimer() {
                 const agora = new Date();
@@ -34,6 +34,27 @@
             <source src="video/background-video.mp4" type="video/mp4">
             Seu navegador não suporta vídeo.
         </video>
+
+        <div class="background-overlay"></div>
+
+        <div class="polaroid-container">
+            <div class="polaroid" id="polaroid-1">
+                <img src="images/foto1.jpg" alt="Foto do casal 1">
+            </div>
+            <div class="polaroid" id="polaroid-2">
+                <img src="images/foto2.jpg" alt="Foto do casal 2">
+            </div>
+            <div class="polaroid" id="polaroid-3">
+                <img src="images/foto3.jpg" alt="Foto do casal 3">
+            </div>
+            <div class="polaroid" id="polaroid-4">
+                <img src="images/foto4.jpg" alt="Foto do casal 4">
+            </div>
+            <div class="polaroid" id="polaroid-5">
+                <img src="images/foto1.jpg" alt="Foto do casal 5">
+            </div>
+        </div>
+
         <div class="video-content scrollable">
             <section class="section fade-in">
                 <h1 class="sage title-names">
@@ -42,17 +63,13 @@
                     <span class="nome">Renan</span>
                 </h1>
             </section>
-            <section class="section fade-in">
+            <section class="section fade-in" id="details-section">
                 <p class="data-local">11 de Outubro de 2025<br>São José dos Pinhais, PR</p>
                 <p id="timer" class="timer"></p>
-            </section>
-            <section class="section fade-in">
                 <p class="mensagem">
                     Com alegria convidamos você para celebrar conosco esse momento especial.<br>
                     Prepare-se para um dia repleto de amor, emoção e boas lembranças.
                 </p>
-            </section>
-            <section class="section fade-in">
                 <p class="mensagem">
                     Sua presença tornará tudo ainda mais inesquecível.<br><br>
                     <strong>Contamos com você!</strong>
@@ -60,48 +77,91 @@
             </section>
         </div>
     </div>
-    <script>
-        // Efeito: vídeo sobe quando rola para baixo, desce quando rola para cima, e retorna ao centro ao parar
-        const video = document.getElementById('bg-video');
-        const scrollable = document.querySelector('.scrollable');
-        let lastScrollTop = 0;
-        let scrollTimeout;
+<script>
+    // --- ELEMENTOS ---
+    const video = document.getElementById('bg-video');
+    const scrollableContent = document.querySelector('.scrollable');
+    const sections = document.querySelectorAll('.section');
+    const backgroundOverlay = document.querySelector('.background-overlay');
+    const detailsSection = document.getElementById('details-section');
+    const polaroids = document.querySelectorAll('.polaroid'); // Pega todas as fotos
 
-        scrollable.addEventListener('scroll', function() {
-            const maxOffset = 40;
-            const scrollTop = scrollable.scrollTop;
-            const scrollHeight = scrollable.scrollHeight;
-            const clientHeight = scrollable.clientHeight;
+    // --- VARIÁVEIS DE CONTROLE ---
+    let lastScrollTop = 0;
+    let scrollTimeout;
 
-            // Direção do scroll: positivo para baixo, negativo para cima
-            const direction = scrollTop > lastScrollTop ? 1 : -1;
-            lastScrollTop = scrollTop;
+    // --- FUNÇÃO PRINCIPAL DE SCROLL ---
+    function handleScroll() {
+        const windowHeight = window.innerHeight;
+        
+        // --- Cálculo da Posição e Porcentagem de Scroll ---
+        const scrollTop = scrollableContent.scrollTop;
+        const scrollHeight = scrollableContent.scrollHeight;
+        const clientHeight = scrollableContent.clientHeight;
+        const detailsRect = detailsSection.getBoundingClientRect();
 
-            const percent = scrollTop / (scrollHeight - clientHeight);
-
-            // Se rolando para baixo, vídeo sobe; se rolando para cima, vídeo desce
-            video.style.transform = `translateY(${direction * percent * maxOffset}px)`;
-
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                video.style.transform = 'translateY(0)';
-            }, 100);
+        // 1. EFEITO DE FADE-IN NAS SEÇÕES DE TEXTO
+        const trigger = windowHeight * 0.80;
+        sections.forEach(sec => {
+            const rect = sec.getBoundingClientRect();
+            if (rect.top < trigger) {
+                sec.classList.add('visible');
+            }
         });
 
-        // Fade-in das sessões ao aparecer na tela
-        function onScrollFadeIn() {
-            const sections = document.querySelectorAll('.section');
-            const trigger = window.innerHeight * 0.80;
-            sections.forEach(sec => {
-                const rect = sec.getBoundingClientRect();
-                if (rect.top < trigger) {
-                    sec.classList.add('visible');
-                }
-            });
+        // 2. EFEITO DE MOVIMENTO DO VÍDEO
+        const maxOffset = 40;
+        const direction = scrollTop > lastScrollTop ? 1 : -1;
+        lastScrollTop = scrollTop;
+        const percent = scrollTop / (scrollHeight - clientHeight);
+        video.style.transform = `translateY(${direction * percent * maxOffset}px)`;
+        
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            video.style.transform = 'translateY(0)';
+        }, 150);
+
+        // 3. EFEITO DE OVERLAY DE FUNDO E APARIÇÃO DAS FOTOS
+        const maxOpacity = 0.6; // Aumentei um pouco para dar mais contraste às fotos
+        const scrollPercent = Math.max(0, Math.min(1, (windowHeight - detailsRect.top) / windowHeight));
+        backgroundOverlay.style.opacity = scrollPercent * maxOpacity;
+
+        // Lógica para mostrar as Polaroids
+        const photoThresholds = [0.15, 0.30, 0.45, 0.60, 0.75]; // Pontos de scroll para cada foto aparecer
+        polaroids.forEach((photo, index) => {
+            if (scrollPercent >= photoThresholds[index]) {
+                photo.classList.add('visible');
+            } else {
+                photo.classList.remove('visible'); // Esconde se o usuário rolar para cima
+            }
+        });
+    }
+
+    // --- FUNÇÃO DO TIMER ---
+    function iniciaTimer() {
+        const dataEvento = new Date('2025-10-11T10:25:00');
+        const timerEl = document.getElementById('timer');
+        function atualizaTimer() {
+            const agora = new Date();
+            const diff = dataEvento - agora;
+            if (diff <= 0) { timerEl.textContent = "O grande dia chegou!"; return; }
+            const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutos = Math.floor((diff / (1000 * 60)) % 60);
+            const segundos = Math.floor((diff / 1000) % 60);
+            timerEl.textContent = `${dias} dias, ${horas}h, ${minutos}min, ${segundos}s`;
         }
-        document.querySelector('.scrollable').addEventListener('scroll', onScrollFadeIn);
-        window.addEventListener('load', onScrollFadeIn);
-        window.addEventListener('resize', onScrollFadeIn);
-    </script>
+        atualizaTimer();
+        setInterval(atualizaTimer, 1000);
+    }
+
+    // --- INICIALIZAÇÃO ---
+    scrollableContent.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+    window.addEventListener('load', () => {
+        iniciaTimer();
+        handleScroll(); // Executa uma vez para definir o estado inicial correto
+    });
+</script>
 </body>
 </html>
