@@ -28,7 +28,7 @@ body {
 .title-names { font-family: 'Sage', serif; font-size: 7.8rem; } 
 .title-names .nome { font-size: 2em; } 
 .title-names .e-comercial { font-size: 2em; color: #4d6737; margin: 0 0.3em; font-weight: bold; }
-.scroll-prompt { margin-top: 30px; font-size: 1.7rem; letter-spacing: 1px; opacity: 0.8; line-height: 1.6; }
+.scroll-prompt { margin-top: 30px; font-size: 2rem; letter-spacing: 1px; opacity: 0.8; line-height: 1.6; }
 
 .content-panel { background: rgba(244, 243, 238, 0.96); margin: 0 auto; padding: 2vh 5vw; width: 90%; max-width: 1200px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); border-radius: 8px; position: relative; z-index: 3; color: #333; opacity: 0; transform: translateY(40px); transition: opacity 1s ease-out, transform 1s ease-out; }
 .content-panel.is-visible { opacity: 1; transform: translateY(0); }
