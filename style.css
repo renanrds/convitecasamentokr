@@ -4,6 +4,9 @@
     src: url('fonts/Distant_Stroke_Medium.otf') format('opentype');
     font-weight: normal; font-style: normal;
 }
+html {
+    scroll-behavior: smooth;
+}
 body {
     min-height: 100vh; margin: 0; padding: 0; background: #feced0;
     display: flex; justify-content: center; align-items: center;
@@ -22,11 +25,9 @@ body {
 /* --- SEÇÕES E PAINEL --- */
 .section { min-height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; padding: 10vh 5vw; box-sizing: border-box; text-align: center; position: relative; }
 #boas-vindas { color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.7); }
-/* AUMENTADO */
 .title-names { font-family: 'Sage', serif; font-size: 7.8rem; } 
 .title-names .nome { font-size: 2em; } 
 .title-names .e-comercial { font-size: 2em; color: #4d6737; margin: 0 0.3em; font-weight: bold; }
-/* AUMENTADO */
 .scroll-prompt { margin-top: 30px; font-size: 1.7rem; letter-spacing: 1px; opacity: 0.8; line-height: 1.6; }
 
 .content-panel { background: rgba(244, 243, 238, 0.96); margin: 0 auto; padding: 2vh 5vw; width: 90%; max-width: 1200px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); border-radius: 8px; position: relative; z-index: 3; color: #333; opacity: 0; transform: translateY(40px); transition: opacity 1s ease-out, transform 1s ease-out; }
@@ -34,57 +35,95 @@ body {
 .content-panel::before, .content-panel::after { content: ''; position: absolute; width: 80px; height: 80px; border-color: #4d6737; border-style: solid; }
 .content-panel::before { top: 20px; left: 20px; border-width: 2px 0 0 2px; } .content-panel::after { bottom: 20px; right: 20px; border-width: 0 2px 2px 0; }
 
-.content-panel .section {
-    min-height: 100vh;
-    padding: 15vh 2vw;
-}
+.content-panel .section { min-height: 100vh; padding: 15vh 2vw; }
 
-.section-text { position: relative; z-index: 2; }
-/* AUMENTADO */
+.section-text { position: relative; z-index: 2; width: 100%; }
 .section-text h2 { font-family: 'Sage', serif; font-size: 5.2rem; color: #4d6737; margin-bottom: 30px; } 
-/* AUMENTADO */
 .section-text p { font-size: 1.5rem; line-height: 1.7; max-width: 845px; color: #3a3a3a; margin-left: auto; margin-right: auto;}
 
 /* --- ESTILOS DAS POLAROIDS --- */
 .polaroid-display-area { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
 .polaroid {
     position: absolute; 
-    width: 45vw; /* AUMENTADO */
-    max-width: 416px; /* AUMENTADO */
+    width: 45vw; max-width: 416px;
     aspect-ratio: 3/4; cursor: grab; transform-style: preserve-3d;
     opacity: 0;
     transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease-out;
     pointer-events: auto;
 }
 .polaroid.is-dragging { cursor: grabbing; transition: none; z-index: 100 !important; }
-
 .polaroid.in-view { opacity: 1; }
 .polaroid.is-inspected { z-index: 99; }
 
 .polaroid-front, .polaroid-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #fff; padding: 18px 18px 58px 18px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); box-sizing: border-box; border-radius: 2px; }
 .polaroid-back { transform: rotateY(180deg); color: #333; text-shadow: none; text-align: center; padding: 32px; }
-/* AUMENTADO */
 .polaroid-back h4 { margin: 0 0 12px; font-size: 1.5rem; color: #4d6737; } 
 .polaroid-back p { margin: 0; font-size: 1.3rem; line-height: 1.5; color: #333; } 
 .polaroid-back p.detalhes { font-size: 1rem; opacity: 0.7; margin-top: 7px; } 
 .polaroid-back strong { color: #000; font-weight: 600; }
 .polaroid-front img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 1px;}
 
-/* Posições das fotos */
-#polaroid-1 { top: 10%; left: 8%; } #polaroid-2 { bottom: 12%; right: 10%; top: auto; }
-#polaroid-3 { top: 12%; right: 8%; left: auto; } #polaroid-4 { bottom: 10%; left: 10%; top: auto; }
-#polaroid-5 { bottom: 15%; right: 12%; top: auto; } #polaroid-6 { top: 10%; left: 10%; }
-#polaroid-7 { top: 15%; right: 10%; left: auto; } #polaroid-8 { bottom: 10%; left: 8%; top: auto; }
+/* POSIÇÕES DAS FOTOS ATUALIZADAS CONFORME SOLICITADO */
+#polaroid-1 { top: 5%; left: -5%; } #polaroid-2 { bottom: 8%; right: -3%; top: auto; }
+#polaroid-3 { top: -10%; right: -15%; left: auto; } #polaroid-4 { bottom: -8%; left: -5%; top: auto; }
+#polaroid-5 { bottom: -5%; left: -5%; top: auto; } #polaroid-6 { top: -2%; left: 50%; }
+#polaroid-7 { top: 0%; right: -5%; left: auto; } #polaroid-8 { bottom: 0%; left: -5%; top: auto; }
 
 /* --- INDICADOR DE ROLAGEM --- */
 .scroll-down-indicator { position: relative; margin-top: 25px; width: 24px; height: 40px; border: 2px solid white; border-radius: 50px; }
 .scroll-down-indicator::before { content: ''; position: absolute; left: 50%; top: 8px; width: 4px; height: 8px; margin-left: -2px; background-color: white; border-radius: 2px; animation: scroll-down-animation 2.5s infinite; }
 @keyframes scroll-down-animation { 0% { opacity: 0; transform: translateY(-10px); } 30% { opacity: 1; } 70% { opacity: 1; transform: translateY(10px); } 100% { opacity: 0; transform: translateY(12px); } }
 
+/* --- ÍCONES DE ACESSO RÁPIDO FLUTUANTES --- */
+.quick-links {
+    position: fixed; /* MUDADO PARA FLUTUAR */
+    top: 50%;
+    right: 30px;
+    transform: translateY(-50%); /* Centraliza verticalmente */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 99;
+    visibility: hidden; /* Escondido por padrão */
+    opacity: 0;
+    transition: opacity 0.4s, visibility 0.4s;
+}
+.quick-links.visible {
+    visibility: visible;
+    opacity: 1;
+}
+.quick-links a {
+    color: #3a3a3a;
+    text-decoration: none;
+    font-size: 1.8rem;
+    transition: color 0.3s, transform 0.3s;
+    background-color: rgba(255, 255, 255, 0.85);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+.quick-links a:hover {
+    color: #4d6737;
+    transform: scale(1.1);
+}
+.tooltip-inner {
+    background-color: #4d6737;
+    color: #fff;
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+.tooltip.bs-tooltip-start .tooltip-arrow::before {
+    border-left-color: #4d6737;
+}
+
 /* --- BLOCO DE DATA E HORÁRIO --- */
 .data-horario-container { display: flex; justify-content: center; align-items: center; gap: 25px; margin: 32px auto; background-color: rgba(255, 255, 255, 0.5); padding: 20px 32px; border-radius: 8px; border: 1px solid rgba(77, 103, 55, 0.2); max-width: 455px; width: 100%; }
 .data-bloco { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #3a3a3a; font-weight: bold; flex-grow: 1; }
-/* AUMENTADO */
 .data-bloco .mes { font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; }
 .data-bloco .dia { font-size: 4.2rem; line-height: 1; color: #4d6737; }
 .data-bloco .ano { font-size: 1.5rem; }
@@ -94,7 +133,6 @@ body {
 /* --- BLOCO DE ENDEREÇOS --- */
 .enderecos-container { display: flex; flex-direction: column; gap: 32px; margin-top: 45px; }
 .endereco-card { background: rgba(255,255,255,0.6); padding: 32px; border-radius: 5px; border-left: 4px solid #4d6737; }
-/* AUMENTADO */
 .endereco-card h4 { margin-top: 0; font-size: 1.9rem; color: #4d6737; }
 
 /* --- BLOCO DO PIX --- */
@@ -106,21 +144,48 @@ body {
 #copiar-chave { background: #4d6737; color: #fff; border: none; padding: 15px 23px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; font-weight: bold; font-size: 1.3rem;}
 #copiar-chave:hover { background-color: #3a5029; }
 
-/* --- BOTÕES DE AÇÃO (ACESSO RÁPIDO) --- */
+/* --- BOTÕES DE AÇÃO --- */
 .action-buttons-container { display: flex; justify-content: center; align-items: center; gap: 32px; margin-top: 45px; flex-wrap: wrap; }
 .action-button { text-align: center; }
 .action-button a { display: flex; align-items: center; justify-content: center; width: 104px; height: 104px; background-color: #f8f8f8; border: 2px solid #4d6737; border-radius: 50%; color: #4d6737; font-size: 2.6rem; text-decoration: none; transition: background-color 0.3s, color 0.3s; }
 .action-button a:hover { background-color: #4d6737; color: #fff; }
 .action-button span { display: block; margin-top: 12px; font-size: 1.3rem; color: #3a3a3a; font-weight: 500; }
 
+/* --- BOTÃO FLUTUANTE "VOLTAR AO TOPO" --- */
+#back-to-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: #4d6737;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 100;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s, visibility 0.4s, transform 0.3s;
+}
+#back-to-top-btn:hover {
+    transform: scale(1.1);
+}
+#back-to-top-btn.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
 @media (max-width: 768px) {
     .content-panel { width: 92%; padding: 2vh 5vw; }
     .content-panel::before, .content-panel::after { width: 50px; height: 50px; }
     .content-panel::before { top: 15px; left: 15px; } .content-panel::after { bottom: 15px; right: 15px; }
-    /* AUMENTADO */
-    .polaroid { width: 65vw; max-width: 273px; }
-    #polaroid-1 { top: 8%; left: 5%; } #polaroid-2 { bottom: 10%; right: 5%; left: auto; top: auto; }
-    #polaroid-3 { top: 10%; right: 5%; left: auto; } #polaroid-4 { bottom: 10%; left: 5%; top: auto; }
-    #polaroid-5 { bottom: 10%; right: 5%; top: auto; } #polaroid-6 { top: 12%; left: 5%; }
-    #polaroid-7 { top: 12%; right: 5%; left: auto; } #polaroid-8 { bottom: 15%; left: 10%; top: auto; }
+    .polaroid { display: none; } /* Esconde polaroids em mobile para uma UI mais limpa */
+    .quick-links { top: auto; bottom: 100px; right: 20px; transform: none; }
+    .quick-links a { font-size: 1.5rem; width: 45px; height: 45px; }
+    #back-to-top-btn { bottom: 20px; right: 20px; }
 }

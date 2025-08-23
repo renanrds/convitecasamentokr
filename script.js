@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const contentPanel = document.querySelector('.content-panel');
     const polaroids = document.querySelectorAll('.polaroid');
     const scrollableContainer = document.querySelector('.scrollable');
+    const backToTopButton = document.getElementById('back-to-top-btn');
+    const quickLinks = document.querySelector('.quick-links'); // Adicionado
 
     // Lógica para arrastar e virar os polaroids
     polaroids.forEach(polaroid => {
@@ -72,33 +74,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Animação do painel principal
                 if (entry.target.id === 'nossa-historia') {
                     contentPanel.classList.add('is-visible');
                 }
                 
-                // Animação dos polaroids dentro da seção visível
                 const polaroidsInSection = entry.target.querySelectorAll('.polaroid');
                 polaroidsInSection.forEach(polaroid => {
                     polaroid.classList.add('in-view');
-                    polaroid.classList.remove('is-inspected'); // Reseta o estado
+                    polaroid.classList.remove('is-inspected');
                     const initialRotation = polaroid.dataset.rotation || 0;
                     polaroid.style.transform = `rotateZ(${initialRotation}deg) rotateY(0deg) scale(1)`;
                 });
 
-                // Otimização: para de observar a seção uma vez que ela já foi animada
                 sectionObserver.unobserve(entry.target);
             }
         });
     }, { 
         root: scrollableContainer, 
-        threshold: 0.3 // A animação começa quando 30% da seção está visível
+        threshold: 0.3 
     });
     
     document.querySelectorAll('.section').forEach(section => {
         sectionObserver.observe(section);
     });
     
+    // --- LÓGICA DOS BOTÕES FLUTUANTES ---
+    if (scrollableContainer) {
+        scrollableContainer.addEventListener('scroll', () => {
+            // Condição para mostrar/esconder os botões
+            const shouldBeVisible = scrollableContainer.scrollTop > 400;
+            
+            if (backToTopButton) {
+                backToTopButton.classList.toggle('visible', shouldBeVisible);
+            }
+            if (quickLinks) {
+                quickLinks.classList.toggle('visible', shouldBeVisible);
+            }
+        });
+    }
+
     // --- FUNÇÃO DO BOTÃO PIX ---
     function setupPixButton() {
         const copyButton = document.getElementById('copiar-chave');
@@ -119,5 +133,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     setupPixButton();
+
+    // --- INICIALIZADOR DOS TOOLTIPS DO BOOTSTRAP ---
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
 });
