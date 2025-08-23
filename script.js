@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const polaroids = document.querySelectorAll('.polaroid');
     const scrollableContainer = document.querySelector('.scrollable');
     const backToTopButton = document.getElementById('back-to-top-btn');
-    const quickLinks = document.querySelector('.quick-links'); // Adicionado
+    const quickLinks = document.querySelector('.quick-links');
 
     // Lógica para arrastar e virar os polaroids
     polaroids.forEach(polaroid => {
@@ -101,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- LÓGICA DOS BOTÕES FLUTUANTES ---
     if (scrollableContainer) {
         scrollableContainer.addEventListener('scroll', () => {
-            // Condição para mostrar/esconder os botões
             const shouldBeVisible = scrollableContainer.scrollTop > 400;
             
             if (backToTopButton) {
@@ -133,6 +132,54 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     setupPixButton();
+
+    // --- FUNÇÃO ATUALIZADA PARA O FORMULÁRIO DE CONFIRMAÇÃO ---
+    function setupConfirmationForm() {
+        const form = document.getElementById('rsvp-form');
+        const thankYouMessageDiv = document.getElementById('thank-you-message');
+        const storageKey = 'guestConfirmationData';
+        const hiddenIframe = document.getElementById('hidden_iframe');
+        let formSubmitted = false;
+
+        function showThankYouMessage(name) {
+            thankYouMessageDiv.innerHTML = `<p>Obrigado por confirmar, <span class="guest-name">${name}</span>! Sua presença é muito importante para nós. Mal podemos esperar para celebrar com você!</p>`;
+            form.style.display = 'none';
+            thankYouMessageDiv.style.display = 'block';
+        }
+
+        const savedData = localStorage.getItem(storageKey);
+        if (savedData) {
+            const guestData = JSON.parse(savedData);
+            showThankYouMessage(guestData.name);
+        }
+
+        form.addEventListener('submit', (e) => {
+            const guestNameInput = document.getElementById('guest-name');
+            const guestName = guestNameInput.value.trim();
+
+            if (guestName) {
+                formSubmitted = true;
+                const guestData = { 
+                    name: guestName, 
+                    confirmedAt: new Date().toISOString() 
+                };
+                localStorage.setItem(storageKey, JSON.stringify(guestData));
+            } else {
+                e.preventDefault(); 
+                alert('Por favor, digite seu nome para confirmar.');
+            }
+        });
+
+        hiddenIframe.addEventListener('load', () => {
+            if (formSubmitted) {
+                const savedData = JSON.parse(localStorage.getItem(storageKey));
+                if (savedData && savedData.name) {
+                    showThankYouMessage(savedData.name);
+                }
+            }
+        });
+    }
+    setupConfirmationForm();
 
     // --- INICIALIZADOR DOS TOOLTIPS DO BOOTSTRAP ---
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');

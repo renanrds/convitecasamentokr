@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
     <div class="video-window">
         <video autoplay loop muted playsinline class="video-bg" id="bg-video"><source src="video/background-video.mp4" type="video/mp4"></video>
         <div class="background-overlay"></div>
@@ -26,13 +28,13 @@
                     </div>
                     <div class="section-text">
                         <h2>Nossa História</h2>
-                        <p>De um encontro despretensioso a um amor para a vida toda. Cada passo nos trouxe até aqui, e mal podemos esperar para começar este novo capítulo ao lado das pessoas que mais amamos.</p>
+                        <p>Cada passo nos trouxe até aqui, e mal podemos esperar para começar este novo capítulo ao lado das pessoas que mais amamos.</p>
                     </div>
                 </section>
 
                 <section class="section" id="o-grande-dia">
                     <div class="polaroid-display-area">
-                        <div class="polaroid" id="polaroid-3" data-rotation="12"><div class="polaroid-front"><img src="images/foto3.jpg" alt="Foto do casal 3"></div><div class="polaroid-back"><h4>O "Sim"</h4><p>O momento em que duas vidas se tornam uma.</p></div></div>
+                        <div class="polaroid" id="polaroid-3" data-rotation="-12"><div class="polaroid-front"><img src="images/foto3.jpg" alt="Foto do casal 3"></div><div class="polaroid-back"><h4>O "Sim"</h4><p>O momento em que duas vidas se tornam uma.</p></div></div>
                         <div class="polaroid" id="polaroid-4" data-rotation="-10"><div class="polaroid-front"><img src="images/foto4.jpg" alt="Foto do casal 4"></div><div class="polaroid-back"><h4>A Festa</h4><p>Vamos celebrar com muita música, comida boa e alegria!</p></div></div>
                     </div>
                     <div class="section-text">
@@ -50,12 +52,24 @@
                         <p>Prepare o coração! Nossa união será celebrada em dois momentos especiais.</p>
                         <div class="enderecos-container">
                             <div class="endereco-card">
-                                <h4>Cerimônia</h4>
-                                <p><strong>Local:</strong> (Nome do Local da Cerimônia)<br>Endereço da Cerimônia, Bairro, São José dos Pinhais, PR.</p>
+                                <h4>Cerimônia no Cartório</h4>
+                                <p>
+                                    A assinatura oficial será um momento íntimo, reservado para a família. Mas adoraríamos que você se juntasse a nós na saída para formarmos uma carreata animada até o local da festa! Se preferir, pode ir direto para a comemoração.
+                                    <br>
+                                    <a href="https://maps.app.goo.gl/kq8SofTXcv7zcP4o8" target="_blank" class="map-link">
+                                        <i class="bi bi-pin-map-fill"></i> <strong>Ver no mapa</strong>
+                                    </a>
+                                </p>
                             </div>
                             <div class="endereco-card">
-                                <h4>Comemoração</h4>
-                                <p><strong>Local:</strong> (Nome do Local da Festa)<br>Endereço da Comemoração, Bairro, São José dos Pinhais, PR.</p>
+                                <h4>A Comemoração</h4>
+                                <p>
+                                    Após o "sim", a festa continua no restaurante <strong>Frutos da Terra</strong> (<a href="https://www.instagram.com/frutosdaterraoficial" target="_blank">@frutosdaterraoficial</a>), um refúgio incrível no Caminho do Vinho! Desfrute de um delicioso buffet livre (R$ 85 por pessoa) em meio à natureza, com lago, música ao vivo e um ambiente perfeito para celebrarmos juntos.
+                                    <br>
+                                    <a href="https://maps.app.goo.gl/eEm3vBf183NcqLAg6" target="_blank" class="map-link">
+                                        <i class="bi bi-pin-map-fill"></i> <strong>Ver no mapa</strong>
+                                    </a>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -67,15 +81,15 @@
                         <div class="polaroid" id="polaroid-6" data-rotation="10"><div class="polaroid-front"><img src="images/foto6.jpg" alt="Foto do casal 6"></div><div class="polaroid-back"><h4>Lua de Mel</h4><p>Nos ajude a criar memórias inesquecíveis!</p></div></div>
                     </div>
                      <div class="section-text">
-                        <h2>Mimo aos Noivos</h2>
-                        <p>Sua presença é o nosso maior presente! Mas, se sentir no coração de nos mimar, sua contribuição para a nossa lua de mel será a "cereja do bolo" da nossa celebração. Use o QR Code ou a chave abaixo.</p>
+                        <h2>Operação Lua de Mel</h2>
+                        <p>Sua presença já é o nosso maior presente! Mas se você faz questão de nos dar uma forcinha para começar a vida a dois com o pé direito (e na areia de uma praia paradisíaca), ficaríamos imensamente felizes. Contribuições de qualquer valor para a nossa "Operação Lua de Mel" serão recebidas com o coração cheio de gratidão!</p>
                         <div class="pix-container">
                             <div class="pix-qrcode">
                                 <img src="images/pix-qrcode-placeholder.png" alt="QR Code PIX">
                             </div>
                             <div class="pix-chave">
-                                <strong>Chave PIX (Celular):</strong>
-                                <span id="chave-pix">(41) 99999-9999</span>
+                                <strong>Chave PIX (Aleatória):</strong>
+                                <span id="chave-pix">4947a1d4-47d5-4c71-a442-5c2df74c71bb</span>
                                 <button id="copiar-chave">Copiar Chave</button>
                             </div>
                         </div>
@@ -89,26 +103,40 @@
                     </div>
                     <div class="section-text">
                         <h2>Confirme sua Presença</h2>
-                        <p>Para nos ajudar na organização, por favor, confirme sua presença até o dia <strong>20 de Setembro de 2025</strong>. Mal podemos esperar para celebrar com você!</p>
+                        
+                        <div id="confirmation-area">
+                            <form id="rsvp-form" class="rsvp-form" 
+                                  action="https://docs.google.com/forms/d/e/1FAIpQLSejzvVyAGhxnSXOkupuvLF8mBBZpDKWRn_2X0F7gYv3HAVBIg/formResponse" 
+                                  method="POST" 
+                                  target="hidden_iframe">
+                                <p>Para nos ajudar na organização, por favor, confirme sua presença até <strong>30/09/2025</strong> digitando seu nome abaixo:</p>
+                                <div class="form-group">
+                                    <input type="text" id="guest-name" name="entry.899829737" placeholder="Digite seu nome" required>
+                                    <button type="submit">Confirmar Presença</button>
+                                </div>
+                            </form>
+                            <div id="thank-you-message" class="thank-you-message" style="display: none;">
+                                </div>
+                        </div>
                         
                         <div class="action-buttons-container">
                             <div class="action-button">
-                                <a href="#" title="Endereço da Cerimônia">
+                                <a href="https://maps.app.goo.gl/kq8SofTXcv7zcP4o8" target="_blank" title="Endereço da Cerimônia">
                                     <i class="bi bi-book-half"></i>
                                 </a>
                                 <span>Cerimônia</span>
                             </div>
                              <div class="action-button">
-                                <a href="#" title="Endereço da Comemoração">
+                                <a href="https://maps.app.goo.gl/eEm3vBf183NcqLAg6" target="_blank" title="Endereço da Comemoração">
                                     <i class="bi bi-cup-straw"></i>
                                 </a>
                                 <span>Comemoração</span>
                             </div>
                             <div class="action-button">
-                                <a href="#" title="Confirmar Presença">
-                                    <i class="bi bi-check-circle-fill"></i>
+                                <a href="#presentes" title="Ver Opções de Presente">
+                                    <i class="bi bi-gift-fill"></i>
                                 </a>
-                                <span>Confirmar Presença</span>
+                                <span>Presentes</span>
                             </div>
                         </div>
                     </div>
