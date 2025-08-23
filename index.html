@@ -3,94 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Convite de Casamento - Karina & Renan</title>
-    <style>
-        /* --- ESTILOS GERAIS --- */
-        @font-face {
-            font-family: 'Sage';
-            src: url('fonts/Distant_Stroke_Medium.otf') format('opentype');
-            font-weight: normal; font-style: normal;
-        }
-        body {
-            min-height: 100vh; margin: 0; padding: 0; background: #feced0;
-            display: flex; justify-content: center; align-items: center;
-            width: 100vw; height: 100vh; overflow: hidden;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            user-select: none;
-        }
-
-        /* --- CONTAINER E VÍDEO --- */
-        .video-window { width: 100vw; height: 100vh; position: relative; overflow: hidden; box-shadow: 0 16px 64px 0 rgba(44, 62, 80, 0.22); background: #feced0; margin: auto; }
-        .video-bg { position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: 1; pointer-events: none; }
-        .background-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.45); z-index: 1; pointer-events: none; }
-        .video-content.scrollable { position: relative; z-index: 2; width: 100%; height: 100%; overflow-y: auto; color: #fff; scrollbar-width: none; }
-        .video-content.scrollable::-webkit-scrollbar { display: none; }
-
-        /* --- SEÇÕES E PAINEL --- */
-        .section { min-height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; padding: 10vh 5vw; box-sizing: border-box; text-align: center; position: relative; }
-        #boas-vindas { color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.7); }
-        .title-names { font-family: 'Sage', serif; font-size: 5rem; } .title-names .nome { font-size: 2em; } .title-names .e-comercial { font-size: 2em; color: #4d6737; margin: 0 0.3em; font-weight: bold; }
-        .scroll-prompt { margin-top: 20px; font-size: 1.2rem; letter-spacing: 1px; opacity: 0.8; }
-        .content-panel { background: rgba(244, 243, 238, 0.96); margin: 0 auto; padding: 8vh 5vw; width: 90%; max-width: 1200px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); border-radius: 8px; position: relative; z-index: 3; color: #333; opacity: 0; transform: translateY(40px); transition: opacity 1s ease-out, transform 1s ease-out; }
-        .content-panel.is-visible { opacity: 1; transform: translateY(0); }
-        .content-panel::before, .content-panel::after { content: ''; position: absolute; width: 80px; height: 80px; border-color: #4d6737; border-style: solid; }
-        .content-panel::before { top: 20px; left: 20px; border-width: 2px 0 0 2px; } .content-panel::after { bottom: 20px; right: 20px; border-width: 0 2px 2px 0; }
-        
-        .content-panel .section {
-            min-height: 90vh;
-            padding: 10vh 2vw;
-        }
-        
-        .content-panel .section:not(:last-child)::after {
-            display: none;
-        }
-        
-        .section-text { position: relative; z-index: 2; }
-        .section-text h2 { font-family: 'Sage', serif; font-size: 3.5rem; color: #4d6737; margin-bottom: 10px; } 
-        .section-text p { font-size: 1.1rem; line-height: 1.7; max-width: 600px; color: #3a3a3a; }
-        
-        /* --- ESTILOS DAS POLAROIDS --- */
-        .polaroid-display-area { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-        .polaroid {
-            position: absolute; width: 30vw; max-width: 280px;
-            aspect-ratio: 3/4; cursor: grab; transform-style: preserve-3d;
-            opacity: 0;
-            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease-out;
-            pointer-events: auto;
-        }
-        .polaroid.is-dragging { cursor: grabbing; transition: none; z-index: 100 !important; }
-
-        .polaroid.in-view { opacity: 1; }
-        .polaroid.is-inspected { z-index: 99; }
-
-        .polaroid-front, .polaroid-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #fff; padding: 12px 12px 40px 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); box-sizing: border-box; border-radius: 2px; }
-        .polaroid-back { transform: rotateY(180deg); color: #333; text-shadow: none; text-align: center; padding: 20px; }
-        .polaroid-back h4 { margin: 0 0 10px; font-size: 1.1rem; color: #4d6737; } .polaroid-back p { margin: 0; font-size: 0.9rem; line-height: 1.5; color: #333; } .polaroid-back p.detalhes { font-size: 0.75rem; opacity: 0.7; margin-top: 5px; } .polaroid-back strong { color: #000; font-weight: 600; } .timer-polaroid { font-size: 1.2rem; font-weight: bold; margin: 5px 0; } .timer-polaroid .timer-numero { color: #4d6737; }
-        .polaroid-front img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 1px;}
-
-        /* Posições das fotos */
-        #polaroid-1 { top: 5%; left: 10%; } 
-        #polaroid-2 { top: 10%; right: 5%; left: auto; } 
-        #polaroid-3 { bottom: 5%; left: 10%; top: auto; }
-
-        #polaroid-4 { top: 5%; right: 10%; left: auto; } 
-        #polaroid-8 { bottom: 5%; left:10%; top: auto; }
-        
-        #polaroid-6 { top: 5%; right: 10%; left: auto; } 
-        #polaroid-5 { bottom: 5%; left: 10%; top: auto; }
-
-        #polaroid-7 { bottom:5%; right: 10%; left: auto; }
-
-        @media (max-width: 768px) {
-            .content-panel { width: 92%; padding: 6vh 5vw; }
-            .content-panel::before, .content-panel::after { width: 50px; height: 50px; }
-            .content-panel::before { top: 15px; left: 15px; } .content-panel::after { bottom: 15px; right: 15px; }
-            .polaroid { width: 45vw; max-width: 180px; }
-            #polaroid-1 { top: 8%; left: 5%; } #polaroid-2 { bottom: 10%; right: 5%; left: auto; top: auto; } #polaroid-3 { top: 10%; right: 5%; left: auto; }
-            #polaroid-4 { top: 10%; right: 5%; left: auto; } #polaroid-8 { bottom: 10%; left: 5%; top: auto; }
-            #polaroid-5 { top: 12%; left: 5%; } #polaroid-6 { bottom: 10%; right: 5%; left: auto; top: auto; }
-            #polaroid-7 { bottom: 15%; right: 10%; left: auto; top: auto; }
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="video-window">
@@ -99,165 +14,111 @@
         <div class="video-content scrollable">
             <section class="section" id="boas-vindas">
                 <h1 class="sage title-names"><span class="nome">Karina</span><span class="e-comercial">e</span><span class="nome">Renan</span></h1>
-                <p class="scroll-prompt">Role para celebrar conosco</p>
+                <p class="scroll-prompt">Estamos nos casando!<br>Junte-se a nós nesta celebração.</p>
+                <div class="scroll-down-indicator"></div>
             </section>
+
             <div class="content-panel">
-                 <section class="section" id="cerimonia">
+
+                <section class="section" id="nossa-historia">
                     <div class="polaroid-display-area">
-                        <div class="polaroid" id="polaroid-1" data-rotation="-12"><div class="polaroid-front"><img src="images/foto1.jpg" alt="Foto 1"></div><div class="polaroid-back"><h4>Com alegria...</h4><p>Convidamos para celebrar o capítulo mais feliz da nossa história!</p></div></div>
-                        <div class="polaroid" id="polaroid-2" data-rotation="8"><div class="polaroid-front"><img src="images/foto2.jpg" alt="Foto 2"></div><div class="polaroid-back"><h4>A Cerimônia</h4><p>A união será celebrada no dia <strong>11 de Outubro de 2025</strong>.</p></div></div>
-                        <div class="polaroid" id="polaroid-3" data-rotation="2"><div class="polaroid-front"><img src="images/foto3.jpg" alt="Foto 3"></div><div class="polaroid-back"><h4>O Horário</h4><p>Marque no relógio: <strong>às 10 e 25</strong> da manhã.</p></div></div>
+                        <div class="polaroid" id="polaroid-1" data-rotation="-8"><div class="polaroid-front"><img src="images/foto1.jpg" alt="Foto do casal 1"></div><div class="polaroid-back"><h4>O Início</h4><p>Onde tudo começou... nossa primeira foto juntos!</p></div></div>
+                        <div class="polaroid" id="polaroid-2" data-rotation="10"><div class="polaroid-front"><img src="images/foto2.jpg" alt="Foto do casal 2"></div><div class="polaroid-back"><h4>Alegria</h4><p>Celebrando cada momento lado a lado.</p></div></div>
                     </div>
                     <div class="section-text">
-                        <h2>A Cerimônia</h2>
-                        <p>Com os corações cheios de alegria, convidamos você para testemunhar o início do nosso "felizes para sempre".</p>
+                        <h2>Nossa História</h2>
+                        <p>De um encontro despretensioso a um amor para a vida toda. Cada passo nos trouxe até aqui, e mal podemos esperar para começar este novo capítulo ao lado das pessoas que mais amamos. Role para ver os detalhes do grande dia!</p>
                     </div>
                 </section>
-                <section class="section" id="local-data">
+
+                <section class="section" id="o-grande-dia">
                     <div class="polaroid-display-area">
-                        <div class="polaroid" id="polaroid-4" data-rotation="15"><div class="polaroid-front"><img src="images/foto4.jpg" alt="Foto 4"></div><div class="polaroid-back"><h4>O Local</h4><p>Em <strong>São José dos Pinhais, Paraná.</strong></p><p class="detalhes">(Endereço a ser confirmado)</p></div></div>
-                        <div class="polaroid" id="polaroid-8" data-rotation="-8"><div class="polaroid-front"><img src="images/foto8.jpg" alt="Foto 8"></div><div class="polaroid-back"><h4>Contagem Regressiva</h4><div id="timer-container" class="timer-polaroid"></div><p>Para o nosso 'Sim!'</p></div></div>
+                        <div class="polaroid" id="polaroid-3" data-rotation="12"><div class="polaroid-front"><img src="images/foto3.jpg" alt="Foto do casal 3"></div><div class="polaroid-back"><h4>O "Sim"</h4><p>O momento em que duas vidas se tornam uma.</p></div></div>
+                        <div class="polaroid" id="polaroid-4" data-rotation="-10"><div class="polaroid-front"><img src="images/foto4.jpg" alt="Foto do casal 4"></div><div class="polaroid-back"><h4>A Festa</h4><p>Vamos celebrar com muita música, comida boa e alegria!</p></div></div>
                     </div>
                     <div class="section-text">
-                        <h2>Data e Local</h2>
-                        <p>Nossa união será celebrada no dia 11 de Outubro de 2025, às dez e vinte e cinco da manhã, em um local especial de São José dos Pinhais, Paraná.</p>
+                        <h2>O Grande Dia</h2>
+                        <div class="data-horario-container">
+                             <div class="data-bloco">
+                                <span class="mes">OUT</span>
+                                <span class="dia">11</span>
+                                <span class="ano">2025</span>
+                            </div>
+                            <div class="horario-bloco">
+                                <span class="horario">10:25</span>
+                            </div>
+                        </div>
+                        <p>Prepare o coração! Nossa união será celebrada em dois momentos especiais.</p>
+                        <div class="enderecos-container">
+                            <div class="endereco-card">
+                                <h4>Cerimônia</h4>
+                                <p><strong>Local:</strong> (Nome do Local da Cerimônia)<br>Endereço da Cerimônia, Bairro, São José dos Pinhais, PR.</p>
+                            </div>
+                            <div class="endereco-card">
+                                <h4>Comemoração</h4>
+                                <p><strong>Local:</strong> (Nome do Local da Festa)<br>Endereço da Comemoração, Bairro, São José dos Pinhais, PR.</p>
+                            </div>
+                        </div>
                     </div>
                 </section>
-                <section class="section" id="detalhes">
-                     <div class="polaroid-display-area">
-                        <div class="polaroid" id="polaroid-6" data-rotation="-5"><div class="polaroid-front"><img src="images/foto6.jpg" alt="Foto 6"></div><div class="polaroid-back"><h4>Traje</h4><p>O traje recomendado é <strong>Esporte Fino</strong>.</p></div></div>
-                        <div class="polaroid" id="polaroid-5" data-rotation="10"><div class="polaroid-front"><img src="images/foto5.jpg" alt="Foto 5"></div><div class="polaroid-back"><h4>Sua Presença</h4><p>É o nosso maior presente!</p></div></div>
+
+                <section class="section" id="presentes">
+                    <div class="polaroid-display-area">
+                        <div class="polaroid" id="polaroid-5" data-rotation="-5"><div class="polaroid-front"><img src="images/foto5.jpg" alt="Foto do casal 5"></div><div class="polaroid-back"><h4>Nossos Sonhos</h4><p>Sua contribuição nos ajuda a construir nosso futuro juntos.</p></div></div>
+                        <div class="polaroid" id="polaroid-6" data-rotation="10"><div class="polaroid-front"><img src="images/foto6.jpg" alt="Foto do casal 6"></div><div class="polaroid-back"><h4>Lua de Mel</h4><p>Nos ajude a criar memórias inesquecíveis!</p></div></div>
                     </div>
-                    <div class="section-text">
-                        <h2>Detalhes</h2>
-                        <p>Sua presença é o maior presente, mas separamos alguns detalhes importantes para o grande dia, como o traje e a nossa contagem regressiva!</p>
+                     <div class="section-text">
+                        <h2>Mimo aos Noivos</h2>
+                        <p>Sua presença é o nosso maior presente! Mas, se sentir no coração de nos mimar, sua contribuição para a nossa lua de mel será a "cereja do bolo" da nossa celebração. Use o QR Code ou a chave abaixo.</p>
+                        <div class="pix-container">
+                            <div class="pix-qrcode">
+                                <img src="images/pix-qrcode-placeholder.png" alt="QR Code PIX">
+                            </div>
+                            <div class="pix-chave">
+                                <strong>Chave PIX (Celular):</strong>
+                                <span id="chave-pix">(41) 99999-9999</span>
+                                <button id="copiar-chave">Copiar Chave</button>
+                            </div>
+                        </div>
                     </div>
                 </section>
-                <section class="section" id="rsvp">
+                
+                <section class="section" id="confirmacao">
                     <div class="polaroid-display-area">
-                        <div class="polaroid" id="polaroid-7" data-rotation="3"><div class="polaroid-front"><img src="images/foto7.jpg" alt="Foto 7"></div><div class="polaroid-back"><h4>Confirme</h4><p>Confirme sua presença até 20/09/25 clicando aqui.</p><p class="detalhes">(Link de RSVP)</p></div></div>
+                         <div class="polaroid" id="polaroid-7" data-rotation="8"><div class="polaroid-front"><img src="images/foto7.jpg" alt="Foto do casal 7"></div><div class="polaroid-back"><h4>Contamos com você!</h4><p>Sua presença fará este dia ainda mais especial.</p></div></div>
+                         <div class="polaroid" id="polaroid-8" data-rotation="-12"><div class="polaroid-front"><img src="images/foto8.jpg" alt="Foto do casal 8"></div><div class="polaroid-back"><h4>Até breve!</h4><p>Nos vemos no grande dia!</p></div></div>
                     </div>
                     <div class="section-text">
-                        <h2>Confirmação</h2>
-                        <p>Aguardamos ansiosamente por sua companhia. Por favor, confirme sua presença para que possamos celebrar juntos.</p>
+                        <h2>Confirme sua Presença</h2>
+                        <p>Para nos ajudar na organização, por favor, confirme sua presença até o dia <strong>20 de Setembro de 2025</strong>. Mal podemos esperar para celebrar com você!</p>
+                        
+                        <div class="action-buttons-container">
+                            <div class="action-button">
+                                <a href="#" title="Endereço da Cerimônia">
+                                    <i class="fas fa-church"></i>
+                                </a>
+                                <span>Cerimônia</span>
+                            </div>
+                             <div class="action-button">
+                                <a href="#" title="Endereço da Comemoração">
+                                    <i class="fas fa-glass-cheers"></i>
+                                </a>
+                                <span>Comemoração</span>
+                            </div>
+                            <div class="action-button">
+                                <a href="#" title="Confirmar Presença">
+                                    <i class="fas fa-check-circle"></i>
+                                </a>
+                                <span>Confirmar Presença</span>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </div>
         </div>
     </div>
     
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const contentPanel = document.querySelector('.content-panel');
-        const polaroids = document.querySelectorAll('.polaroid');
-
-        polaroids.forEach(polaroid => {
-            const initialRotation = polaroid.dataset.rotation || 0;
-            let isDragging = false, hasDragged = false;
-            let startX = 0, startY = 0;
-            let currentX = 0, currentY = 0, initialX = 0, initialY = 0;
-            const dragThreshold = 5;
-
-            polaroid.style.transform = `rotateZ(${initialRotation}deg) rotateY(0deg) scale(0.8)`;
-
-            function applyTransform() {
-                let transform;
-                if (polaroid.classList.contains('is-inspected')) {
-                    transform = `translate(${currentX}px, ${currentY}px) rotateY(180deg) rotateZ(0deg) scale(1.1)`;
-                } else {
-                    transform = `translate(${currentX}px, ${currentY}px) rotateZ(${initialRotation}deg) rotateY(0deg)`;
-                }
-                polaroid.style.transform = transform;
-            }
-
-            function startInteraction(e) {
-                e.preventDefault();
-                hasDragged = false;
-                isDragging = true;
-                startX = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
-                startY = e.type === "touchstart" ? e.touches[0].clientY : e.clientY;
-                initialX = currentX;
-                initialY = currentY;
-            }
-
-            function moveInteraction(e) {
-                if (!isDragging) return;
-                e.preventDefault();
-                const moveX = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
-                const moveY = e.type === "touchmove" ? e.touches[0].clientY : e.clientY;
-                if (!hasDragged && (Math.abs(moveX - startX) > dragThreshold || Math.abs(moveY - startY) > dragThreshold)) {
-                    hasDragged = true;
-                    polaroid.classList.add('is-dragging');
-                }
-                if (hasDragged) {
-                    currentX = initialX + (moveX - startX);
-                    currentY = initialY + (moveY - startY);
-                    applyTransform();
-                }
-            }
-
-            function endInteraction() {
-                if (!isDragging) return;
-                isDragging = false;
-                if (hasDragged) {
-                    polaroid.classList.remove('is-dragging');
-                } else {
-                    polaroid.classList.toggle('is-inspected');
-                    applyTransform();
-                }
-            }
-
-            polaroid.addEventListener("mousedown", startInteraction);
-            polaroid.addEventListener("touchstart", startInteraction, { passive: false });
-            document.addEventListener("mousemove", moveInteraction);
-            document.addEventListener("touchmove", moveInteraction, { passive: false });
-            document.addEventListener("mouseup", endInteraction);
-            document.addEventListener("touchend", endInteraction);
-        });
-
-        // --- OBSERVER COM LÓGICA DE ANIMAÇÃO ÚNICA ---
-        const sectionObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                // A ação só ocorre quando a seção ENTRA na tela
-                if (entry.isIntersecting) {
-                    if (entry.target.id === 'cerimonia') {
-                        contentPanel.classList.add('is-visible');
-                    }
-                    
-                    const polaroidsInSection = entry.target.querySelectorAll('.polaroid');
-                    polaroidsInSection.forEach(polaroid => {
-                        polaroid.classList.add('in-view');
-                        polaroid.classList.remove('is-inspected');
-                        const initialRotation = polaroid.dataset.rotation || 0;
-                        polaroid.style.transform = `rotateZ(${initialRotation}deg) rotateY(0deg) scale(1)`;
-                    });
-
-                    // Otimização: Para de observar a seção uma vez que ela já foi animada
-                    sectionObserver.unobserve(entry.target);
-                }
-            });
-        }, { root: document.querySelector('.scrollable'), threshold: 0.3 });
-        
-        document.querySelectorAll('.section').forEach(section => { sectionObserver.observe(section); });
-
-        function iniciaTimer() {
-            const dataEvento = new Date('2025-10-11T10:25:00');
-            const timerEl = document.getElementById('timer-container');
-            if (!timerEl) return;
-            function atualizaTimer() {
-                const agora = new Date();
-                const diff = dataEvento - agora;
-                if (diff <= 0) { timerEl.textContent = "O dia chegou!"; clearInterval(timerInterval); return; }
-                const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                const minutos = Math.floor((diff / (1000 * 60)) % 60);
-                timerEl.innerHTML = `<span class="timer-numero">${dias}</span>d <span class="timer-numero">${horas}</span>h <span class="timer-numero">${minutos}</span>m`;
-            }
-            const timerInterval = setInterval(atualizaTimer, 1000);
-            atualizaTimer();
-        }
-        iniciaTimer();
-    });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
 </body>
 </html>
