@@ -39,7 +39,7 @@ body {
 
 .section-text { position: relative; z-index: 2; width: 100%; }
 .section-text h2 { font-family: 'Sage', serif; font-size: 5.2rem; color: #4d6737; margin-bottom: 30px; } 
-.section-text p { font-size: 1.5rem; line-height: 1.7; max-width: 845px; color: #3a3a3a; margin-left: auto; margin-right: auto;}
+.section-text p { font-size: 2rem; line-height: 1.7; max-width: 845px; color: #3a3a3a; margin-left: auto; margin-right: auto;}
 
 /* --- ESTILOS DAS POLAROIDS --- */
 .polaroid-display-area { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
@@ -63,10 +63,9 @@ body {
 .polaroid-back strong { color: #000; font-weight: 600; }
 .polaroid-front img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 1px;}
 
-/* POSIÇÕES DAS FOTOS ATUALIZADAS CONFORME SOLICITADO */
 #polaroid-1 { top: 5%; left: -5%; } #polaroid-2 { bottom: 8%; right: -3%; top: auto; }
-#polaroid-3 { top: -15%; right: -5%; right: auto; } #polaroid-4 { bottom: -18%; left: -5%; top: auto; }
-#polaroid-5 { bottom: -10%; left: -5%; top: auto; } #polaroid-6 { top: -9%; left: 50%; }
+#polaroid-3 { top: -15%; right: -5%; right: auto; } #polaroid-4 { bottom: -15%; left: -5%; top: auto; }
+#polaroid-5 { bottom: -15%; left: -5%; top: auto; } #polaroid-6 { top: -15%; left: 50%; }
 #polaroid-7 { top: 0%; right: -5%; left: auto; } #polaroid-8 { bottom: 0%; left: -5%; top: auto; }
 
 /* --- INDICADOR DE ROLAGEM --- */
@@ -75,51 +74,12 @@ body {
 @keyframes scroll-down-animation { 0% { opacity: 0; transform: translateY(-10px); } 30% { opacity: 1; } 70% { opacity: 1; transform: translateY(10px); } 100% { opacity: 0; transform: translateY(12px); } }
 
 /* --- ÍCONES DE ACESSO RÁPIDO FLUTUANTES --- */
-.quick-links {
-    position: fixed;
-    top: 50%;
-    right: 30px;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    z-index: 99;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.4s, visibility 0.4s;
-}
-.quick-links.visible {
-    visibility: visible;
-    opacity: 1;
-}
-.quick-links a {
-    color: #3a3a3a;
-    text-decoration: none;
-    font-size: 1.8rem;
-    transition: color 0.3s, transform 0.3s;
-    background-color: rgba(255, 255, 255, 0.85);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-}
-.quick-links a:hover {
-    color: #4d6737;
-    transform: scale(1.1);
-}
-.tooltip-inner {
-    background-color: #4d6737;
-    color: #fff;
-    font-size: 1rem;
-    padding: 8px 12px;
-    border-radius: 5px;
-}
-.tooltip.bs-tooltip-start .tooltip-arrow::before {
-    border-left-color: #4d6737;
-}
+.quick-links { position: fixed; top: 50%; right: 30px; transform: translateY(-50%); display: flex; flex-direction: column; gap: 15px; z-index: 99; visibility: hidden; opacity: 0; transition: opacity 0.4s, visibility 0.4s; }
+.quick-links.visible { visibility: visible; opacity: 1; }
+.quick-links a { color: #3a3a3a; text-decoration: none; font-size: 1.8rem; transition: color 0.3s, transform 0.3s; background-color: rgba(255, 255, 255, 0.85); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
+.quick-links a:hover { color: #4d6737; transform: scale(1.1); }
+.tooltip-inner { background-color: #4d6737; color: #fff; font-size: 1rem; padding: 8px 12px; border-radius: 5px; }
+.tooltip.bs-tooltip-start .tooltip-arrow::before { border-left-color: #4d6737; }
 
 /* --- BLOCO DE DATA E HORÁRIO --- */
 .data-horario-container { display: flex; justify-content: center; align-items: center; gap: 25px; margin: 32px auto; background-color: rgba(255, 255, 255, 0.5); padding: 20px 32px; border-radius: 8px; border: 1px solid rgba(77, 103, 55, 0.2); max-width: 455px; width: 100%; }
@@ -134,20 +94,9 @@ body {
 .enderecos-container { display: flex; flex-direction: column; gap: 32px; margin-top: 45px; }
 .endereco-card { background: rgba(255,255,255,0.6); padding: 32px; border-radius: 5px; border-left: 4px solid #4d6737; }
 .endereco-card h4 { margin-top: 0; font-size: 1.9rem; color: #4d6737; }
-.map-link {
-    display: inline-block;
-    margin-top: 15px;
-    color: #4d6737;
-    text-decoration: none;
-    font-size: 1.4rem;
-    font-weight: bold;
-}
-.map-link:hover {
-    text-decoration: underline;
-}
-.map-link i {
-    margin-right: 8px;
-}
+.map-link { display: inline-block; margin-top: 15px; color: #4d6737; text-decoration: none; font-size: 1.4rem; font-weight: bold; }
+.map-link:hover { text-decoration: underline; }
+.map-link i { margin-right: 8px; }
 
 /* --- BLOCO DO PIX --- */
 .pix-container { margin-top: 40px; background: rgba(255, 255, 255, 0.6); padding: 32px; border-radius: 8px; max-width: 520px; margin-left: auto; margin-right: auto; }
@@ -160,44 +109,12 @@ body {
 
 /* --- FORMULÁRIO DE CONFIRMAÇÃO --- */
 .rsvp-form p { margin-bottom: 20px; }
-.form-group {
-    display: flex;
-    gap: 10px;
-    max-width: 600px;
-    margin: 0 auto 20px auto;
-}
-.form-group input {
-    flex-grow: 1;
-    padding: 15px;
-    font-size: 1.2rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-.form-group button {
-    background: #4d6737;
-    color: #fff;
-    border: none;
-    padding: 15px 25px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1.2rem;
-    transition: background-color 0.3s;
-}
-.form-group button:hover {
-    background-color: #3a5029;
-}
-.thank-you-message {
-    padding: 20px;
-    background-color: rgba(77, 103, 55, 0.1);
-    border: 1px solid rgba(77, 103, 55, 0.2);
-    border-radius: 8px;
-    margin-top: 20px;
-}
-.thank-you-message .guest-name {
-    font-weight: bold;
-    color: #4d6737;
-}
+.form-group { display: flex; gap: 10px; max-width: 600px; margin: 0 auto 20px auto; }
+.form-group input { flex-grow: 1; padding: 15px; font-size: 1.2rem; border: 1px solid #ccc; border-radius: 5px; }
+.form-group button { background: #4d6737; color: #fff; border: none; padding: 15px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1.2rem; transition: background-color 0.3s; }
+.form-group button:hover { background-color: #3a5029; }
+.thank-you-message { padding: 20px; background-color: rgba(77, 103, 55, 0.1); border: 1px solid rgba(77, 103, 55, 0.2); border-radius: 8px; margin-top: 20px; }
+.thank-you-message .guest-name { font-weight: bold; color: #4d6737; }
 
 /* --- BOTÕES DE AÇÃO --- */
 .action-buttons-container { display: flex; justify-content: center; align-items: center; gap: 32px; margin-top: 45px; flex-wrap: wrap; }
@@ -207,33 +124,42 @@ body {
 .action-button span { display: block; margin-top: 12px; font-size: 1.3rem; color: #3a3a3a; font-weight: 500; }
 
 /* --- BOTÃO FLUTUANTE "VOLTAR AO TOPO" --- */
-#back-to-top-btn {
+#back-to-top-btn { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background-color: #4d6737; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 100; visibility: hidden; opacity: 0; transition: opacity 0.4s, visibility 0.4s, transform 0.3s; }
+#back-to-top-btn:hover { transform: scale(1.1); }
+#back-to-top-btn.visible { visibility: visible; opacity: 1; }
+
+/* --- POP-UP DA JOJO --- */
+#jojo-popup {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
-    background-color: #4d6737;
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    text-decoration: none;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    z-index: 1000;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    text-align: center;
     visibility: hidden;
     opacity: 0;
-    transition: opacity 0.4s, visibility 0.4s, transform 0.3s;
+    transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
-#back-to-top-btn:hover {
-    transform: scale(1.1);
-}
-#back-to-top-btn.visible {
+#jojo-popup.show {
     visibility: visible;
     opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
 }
+#jojo-popup img {
+    max-width: 300px;
+    border-radius: 5px;
+}
+#jojo-popup p {
+    color: #3a3a3a;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 10px 0 0 0;
+}
+
 
 @media (max-width: 768px) {
     .content-panel { width: 92%; padding: 2vh 5vw; }

@@ -112,14 +112,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- FUNÇÃO DO BOTÃO PIX ---
+    // --- FUNÇÃO DO BOTÃO PIX E POP-UP DA JOJO ---
     function setupPixButton() {
         const copyButton = document.getElementById('copiar-chave');
         const pixKeyElement = document.getElementById('chave-pix');
+        const jojoPopup = document.getElementById('jojo-popup');
+        const jojoImage = document.getElementById('jojo-image');
+        const jojoCaption = document.getElementById('jojo-caption');
+
+        const jojoPhotos = [
+            { src: 'images/20250330_172406.jpg', caption: 'Fiscal de PIX oficial. Pode mandar!' },
+            { src: 'images/20230420_152420.jpg', caption: 'Só saio da gaveta se o presente for bom.' },
+            { src: 'images/20250514_204546.jpg', caption: 'Sua contribuição garante meu conforto. Grata.' },
+            { src: 'images/20250210_131721.jpg', caption: 'Cansada depois de zerar a lista de presentes.' },
+            { src: 'images/20240710_183310.jpg', caption: 'Até me arrumei pra ver esse PIX.' },
+            { src: 'images/20250104_203659.jpg', caption: 'É sério que você ainda não contribuiu?' },
+            { src: 'images/20230603_124214.jpg', caption: 'Juntando para uma coleira de grife.' },
+            { src: 'images/20240427_155356.jpg', caption: 'Acha que essa vida boa se paga sozinha?' },
+            { src: 'images/20240727_115650.jpg', caption: 'Com este look, mereço um PIX caprichado.' },
+            { src: 'images/20240714_193227.jpg', caption: 'Tô de olho nessa sua transferência...' }
+        ];
         
         if (copyButton && pixKeyElement) {
             const pixKey = pixKeyElement.textContent;
             copyButton.addEventListener('click', () => {
+                // Lógica de copiar a chave
                 navigator.clipboard.writeText(pixKey).then(() => {
                     copyButton.textContent = 'Copiado!';
                     setTimeout(() => {
@@ -128,12 +145,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 }).catch(err => {
                     console.error('Erro ao copiar a chave PIX: ', err);
                 });
+
+                // Lógica do pop-up da Jojo
+                if (jojoPopup) {
+                    // Escolhe uma foto e legenda aleatória
+                    const randomJojo = jojoPhotos[Math.floor(Math.random() * jojoPhotos.length)];
+                    jojoImage.src = randomJojo.src;
+                    jojoCaption.textContent = randomJojo.caption;
+                    
+                    // Mostra o pop-up
+                    jojoPopup.classList.add('show');
+
+                    // Esconde o pop-up depois de alguns segundos
+                    setTimeout(() => {
+                        jojoPopup.classList.remove('show');
+                    }, 2500); // O pop-up ficará visível por 2.5 segundos
+                }
             });
         }
     }
     setupPixButton();
 
-    // --- FUNÇÃO ATUALIZADA PARA O FORMULÁRIO DE CONFIRMAÇÃO ---
+    // --- FUNÇÃO PARA O FORMULÁRIO DE CONFIRMAÇÃO ---
     function setupConfirmationForm() {
         const form = document.getElementById('rsvp-form');
         const thankYouMessageDiv = document.getElementById('thank-you-message');
